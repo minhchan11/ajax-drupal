@@ -1,0 +1,6 @@
+name = Time
+description = The module that will display a Time
+package = Our Pet Module
+core = 7.x
+files[] = time.module
+scripts[] = ajax_link.js
