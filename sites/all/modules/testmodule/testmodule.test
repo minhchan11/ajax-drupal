@@ -1,0 +1,36 @@
+<?php
+class TestCalculation extends DrupalUnitTestCase
+{
+    static public function getInfo()
+    {
+        return array(
+            'name' => 'Sum Tests',
+            'description' => 'Unit Tests for this module',
+            'group' => 'My Test Module',
+        );
+    }
+
+    public function setUp()
+    {
+           //enable modules we need by putting their machine readable names into an array.
+           parent::setUp(array('testmodule'));
+    }
+
+    public function testCalculate()
+    {
+      $description = 'Should return a sume';
+      $expected = 3;
+      $output = calculate(1,2);
+      $this->assertEqual($expected, $output, "Match");
+
+      $description = 'Return true';
+      $input = 0;
+      $result = trueTest($input);
+      $this->assertTrue($result, $description);
+
+      $description = 'Return false';
+      $input = 1;
+      $result = trueTest($input);
+      $this->assertFalse($result, $description);
+    }
+}

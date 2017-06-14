@@ -1,0 +1,7 @@
+name = Some Test
+description = The module that will calculate two numbers
+package = Minh's
+core = 7.x
+files[] = testmodule.module
+files[] = testmodule.test
+dependencies[] = simpletest

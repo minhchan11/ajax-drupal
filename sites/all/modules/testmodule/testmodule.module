@@ -1,0 +1,71 @@
+<?php
+
+  function testmodule_menu(){
+    $items['testmodule'] = array (
+    'title' => 'Calculate Sum',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('testmodule_form'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+    $items['testmodule_success_page'] = array (
+    'title' => 'Success',
+    'page callback' => 'testmodule_success',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+    return $items;
+  }
+
+  function testmodule_form(){
+    $form['left_number'] = array(
+       '#title' => 'Left number',
+       '#type' => 'textfield',
+       '#description' => t('Please enter your starting number.'),
+   );
+
+   $form['right_number'] = array(
+       '#title' => 'Right number',
+       '#type' => 'textfield',
+       '#description' => t('Please enter a number to add'),
+   );
+
+   $form['submit'] = array(
+       '#type' => 'submit',
+       '#value' => 'Calculate Sum',
+   );
+
+   return $form;
+  }
+
+  function calculate($first, $second){
+    return $first + $second;
+  }
+
+  function trueTest($number){
+    if ($number == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  function testmodule_form_submit($form, &$form_state) {
+    $first = $form_state['values']['left_number'];
+    $second = $form_state['values']['right_number'];
+    $sum = calculate($first, $second);
+    $_SESSION['sum_output'] = $sum;
+
+    $form_state['redirect'] = 'testmodule_success_page';
+}
+
+function testmodule_success() {
+  $answer = $_SESSION['sum_output'];
+    return 'The result is ' . $answer;
+}
+
+function testmodule_simpletest() {
+  $module_name = 'testmodule';
+  $dir = drupal_get_path('module', $module_name). '/tests';
+  $tests = file_scan_directory($dir, '\.test$');
+  return array_keys($tests);
+}
